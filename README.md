@@ -3,5 +3,5 @@
 **Pre-requisites**: `node v9.6`, `yarn`
 
 **Set up**:
-* `yarn install`
+* `yarn`
 * `npm start`

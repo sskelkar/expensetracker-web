@@ -1,7 +1,6 @@
 const path = require('path');
 const Clean = require('clean-webpack-plugin');
 const Copy = require('copy-webpack-plugin');
-const webpack = require('webpack');
 let SOURCE = path.resolve(__dirname, 'src');
 let DEST = path.resolve(__dirname, 'build');
 
@@ -10,26 +9,23 @@ module.exports = {
     devServer: {
         contentBase: DEST,
         publicPath: '/js/',
-        open: true
+        open: true,
+        port: 3333
     },
     plugins: [
         //new Clean([DEST]),  TODO issue: build gets deleted before webpack-dev-server
-        new Copy([{from: 'index.html', to: DEST}]),
-        new webpack.HotModuleReplacementPlugin()
+        new Copy([{from: 'index.html', to: DEST}])
     ],
     module: {
-        rules: [
-            {
-                test: /\.js$/,
-                include: SOURCE,
-                use: {
-                    loader: "babel-loader",
-                    options: {
-                        presets: ["react", "es2015"]
-                    }
-                }
-            }
-        ]
+        rules: [{
+            test: /\.js$/,
+            exclude: /node_modules/,
+            use: ["babel-loader"]
+        }, {
+            test: /\.js$/,
+            exclude: /node_modules/,
+            use: ["babel-loader", "eslint-loader"]
+        }]
     },
     output: {
         filename: "bundle.js",

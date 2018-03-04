@@ -1,5 +1,6 @@
 import React from 'react';
 import {connect} from 'react-redux';
+import PropTypes from 'prop-types';
 import {getNextLine} from './actions';
 
 export class Dashboard extends React.Component {
@@ -18,6 +19,11 @@ export class Dashboard extends React.Component {
         );
     }
 }
+
+Dashboard.propTypes = {
+    line: PropTypes.string,
+    getNextLine: PropTypes.func.isRequired
+};
 
 const mapStateToProps = (state, ownProps) => ({
     line: state.line

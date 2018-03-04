@@ -8,11 +8,11 @@ const lyrics = [
 
 export default function reducer(state = {}, action) {
     if (action.type === NEXT_LINE) {
-        let index = action.index % 3;
+        const index = action.index % 3;
 
         return {
             line: lyrics[index]
-        }
+        };
     } else {
         return state;
     }

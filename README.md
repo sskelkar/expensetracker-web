@@ -5,3 +5,4 @@
 **Set up**:
 * `yarn`
 * `npm start`
+* `npm test`

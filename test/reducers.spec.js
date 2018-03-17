@@ -1,5 +1,6 @@
-import {NEXT_LINE} from '../src/js/actions';
+import {FETCH_EXPENSES, NEXT_LINE} from '../src/js/actions';
 import reducer from '../src/js/reducers';
+import {EXPENSES} from "../src/resources/expenses";
 
 describe('reducers', () => {
     it('should return first line when index%3 is 0', () => {
@@ -20,5 +21,18 @@ describe('reducers', () => {
     it('should return unchanged state when action is invalid', () => {
         const initialState = {line: 'Hello!'};
         expect(reducer(initialState, {})).toBe(initialState);
+    });
+
+    it('should return expenses when FETCH_EXPENSES action is passed', () => {
+        //given
+        const action = {type: FETCH_EXPENSES, expenses: EXPENSES};
+        let initialState = {line: 'line'};
+
+        //when
+        let result = reducer(initialState, action);
+
+        //then
+        expect(result).toEqual({expenses: EXPENSES, line: 'line'});
+        expect(result).not.toBe(initialState);
     });
 });

@@ -1,4 +1,4 @@
-import {NEXT_LINE} from './actions';
+import {FETCH_EXPENSES, NEXT_LINE} from './actions';
 
 const lyrics = [
     'Hello!',
@@ -6,14 +6,14 @@ const lyrics = [
     "Won't you tell me your name"
 ];
 
-export default function reducer(state = {}, action) {
-    if (action.type === NEXT_LINE) {
-        const index = action.index % 3;
-
-        return {
-            line: lyrics[index]
-        };
-    } else {
-        return state;
+export default function reducer(state = {expenses: []}, action) {
+    switch (action.type) {
+        case NEXT_LINE:
+            const index = action.index % 3;
+            return Object.assign({}, state, {line: lyrics[index]});
+        case FETCH_EXPENSES:
+            return Object.assign({}, state, {expenses: action.expenses});
+        default:
+            return state;
     }
 }

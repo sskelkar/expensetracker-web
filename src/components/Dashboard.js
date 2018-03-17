@@ -16,6 +16,7 @@ export default class Dashboard extends React.Component {
         let {line, getNextLine, expenses} = this.props;
         return (
             <div id="outer" onClick={() => getNextLine(this.count++)}>
+                <h1>Dashboard</h1>
                 <h2>{line || "Click me!"}</h2>
                 <div id="inner">
                     Your expenses this month are:

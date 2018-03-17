@@ -10,7 +10,8 @@ module.exports = {
         contentBase: DEST,
         publicPath: '/js/',
         open: true,
-        port: 3333
+        port: 3333,
+        historyApiFallback: true
     },
     plugins: [
         //new Clean([DEST]),  TODO issue: build gets deleted before webpack-dev-server

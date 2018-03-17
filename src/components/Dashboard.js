@@ -1,9 +1,7 @@
 import React from 'react';
-import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
-import {getNextLine, fetchExpenses} from '../actions/actions';
 
-export class Dashboard extends React.Component {
+export default class Dashboard extends React.Component {
     constructor(props) {
         super(props);
 
@@ -30,19 +28,7 @@ export class Dashboard extends React.Component {
 
 Dashboard.propTypes = {
     line: PropTypes.string,
-    getNextLine: PropTypes.func.isRequired,
+    getNextLine: PropTypes.func,
     expenses: PropTypes.array,
     fetchExpenses: PropTypes.func
 };
-
-const mapStateToProps = (state, ownProps) => ({
-    expenses: state.expenses,
-    line: state.line
-});
-
-const mapDispatchToProps = {
-    fetchExpenses,
-    getNextLine
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(Dashboard);

@@ -3,13 +3,13 @@ import ReactDOM from 'react-dom';
 import {Provider} from 'react-redux';
 import {createStore} from 'redux';
 import reducer from './reducers/reducers';
-import Dashboard from './components/Dashboard';
+import {Main} from './pages/Main';
 
 let store = createStore(reducer);
 
 ReactDOM.render(
     <Provider store={store}>
-        <Dashboard/>
+        <Main/>
     </Provider>,
     document.getElementById('app')
 );

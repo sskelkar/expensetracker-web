@@ -1,5 +1,5 @@
-import {getNextLine, NEXT_LINE, FETCH_EXPENSES, fetchExpenses} from '../src/js/actions';
-import {EXPENSES} from "../src/resources/expenses";
+import {getNextLine, NEXT_LINE, FETCH_EXPENSES, fetchExpenses} from '../../src/actions/actions';
+import {EXPENSES} from "../../src/resources/expenses";
 
 describe('actions', () => {
    it('should emit get lyrics action', () => {

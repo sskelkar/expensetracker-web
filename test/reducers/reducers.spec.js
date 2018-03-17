@@ -1,6 +1,6 @@
-import {FETCH_EXPENSES, NEXT_LINE} from '../src/js/actions';
-import reducer from '../src/js/reducers';
-import {EXPENSES} from "../src/resources/expenses";
+import {FETCH_EXPENSES, NEXT_LINE} from '../../src/actions/actions';
+import reducer from '../../src/reducers/reducers';
+import {EXPENSES} from "../../src/resources/expenses";
 
 describe('reducers', () => {
     it('should return first line when index%3 is 0', () => {

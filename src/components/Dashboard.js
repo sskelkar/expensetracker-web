@@ -1,7 +1,7 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
-import {getNextLine, fetchExpenses} from './actions';
+import {getNextLine, fetchExpenses} from '../actions/actions';
 
 export class Dashboard extends React.Component {
     constructor(props) {

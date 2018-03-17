@@ -1,4 +1,4 @@
-import {FETCH_EXPENSES, NEXT_LINE} from './actions';
+import {FETCH_EXPENSES, NEXT_LINE} from '../actions/actions';
 
 const lyrics = [
     'Hello!',

@@ -2,25 +2,20 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 export default class Dashboard extends React.Component {
-    constructor(props) {
-        super(props);
-
-        this.count = 0;
-    }
-
     componentWillMount() {
         this.props.fetchExpenses();
     }
 
     render() {
-        let {line, getNextLine, expenses} = this.props;
+        let {isFetchingExpenses, error} = this.props,
+            expenses = this.props.expenses || [];
         return (
-            <div id="outer" onClick={() => getNextLine(this.count++)}>
+            <div id="outer">
+                <p>{error || ''}</p>
                 <h1>Dashboard</h1>
-                <h2>{line || "Click me!"}</h2>
                 <div id="inner">
                     Your expenses this month are:
-                    {expenses ? expenses.length : 0}
+                    {isFetchingExpenses ? <h1>Loading...</h1> : expenses.length}
                 </div>
             </div>
         );
@@ -28,8 +23,8 @@ export default class Dashboard extends React.Component {
 }
 
 Dashboard.propTypes = {
-    line: PropTypes.string,
-    getNextLine: PropTypes.func,
+    fetchExpenses: PropTypes.func,
     expenses: PropTypes.array,
-    fetchExpenses: PropTypes.func
+    isFetchingExpenses: PropTypes.bool,
+    error: PropTypes.string
 };

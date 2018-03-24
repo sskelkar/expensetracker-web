@@ -6,29 +6,39 @@ describe('Dashboard', () => {
     let props;
     beforeEach(() => {
         props = {
-            getNextLine: () => {},
-            fetchExpenses: () => {},
+            expenses: [],
+            fetchExpenses: () => {
+            },
+            isFetchingExpenses: false
         };
     });
 
     it('should be correct on initial render', () => {
+        props = {...props, isFetchingExpenses: true};
         let wrapper = shallow(<Dashboard {...props}/>);
-        expect(wrapper.find('h2').text()).toBe('Click me!');
+        expect(wrapper.find('div#inner').text()).toBe('Your expenses this month are:Loading...');
+    });
+
+    it('should render expenses count', () => {
+        let wrapper = shallow(<Dashboard {...props}/>);
         expect(wrapper.find('div#inner').text()).toBe('Your expenses this month are:0');
     });
 
-    it('should render correctly as per passed prop', () => {
-        props.line='Hi';
+    it('should render error message', () => {
+        let error = "Failed to fetch expenses";
+        props = {...props, error};
         let wrapper = shallow(<Dashboard {...props}/>);
-        expect(wrapper.find('h2').text()).toBe('Hi');
+
+        expect(wrapper.find('p').text()).toBe(error);
     });
 
-    it('should call getNextLine function when the text is clicked', () => {
-        let mockFunction = jest.fn();
-        props.getNextLine = mockFunction;
-        let wrapper = shallow(<Dashboard {...props}/>);
-        wrapper.find('#outer').simulate('click');
-
-        expect(mockFunction.mock.calls.length).toBe(1);
-    });
+    // TODO: Kept this code for now to refer to stubbed actions
+    // it('should call getNextLine function when the text is clicked', () => {
+    //     let mockFunction = jest.fn();
+    //     props.getNextLine = mockFunction;
+    //     let wrapper = shallow(<Dashboard {...props}/>);
+    //     wrapper.find('#outer').simulate('click');
+    //
+    //     expect(mockFunction.mock.calls.length).toBe(1);
+    // });
 });

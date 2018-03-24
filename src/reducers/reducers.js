@@ -1,18 +1,13 @@
-import {FETCH_EXPENSES, NEXT_LINE} from '../actions/actions';
-
-const lyrics = [
-    'Hello!',
-    'I love you',
-    "Won't you tell me your name"
-];
+import {FETCH_EXPENSES_FAIL, FETCH_EXPENSES_INIT, FETCH_EXPENSES_SUCCESS} from '../actions/actions';
 
 export default function reducer(state = {expenses: []}, action) {
     switch (action.type) {
-        case NEXT_LINE:
-            const index = action.index % 3;
-            return Object.assign({}, state, {line: lyrics[index]});
-        case FETCH_EXPENSES:
-            return Object.assign({}, state, {expenses: action.expenses});
+        case FETCH_EXPENSES_INIT:
+            return {...state, isFetchingExpenses: true, error: undefined};
+        case FETCH_EXPENSES_SUCCESS:
+            return {...state, isFetchingExpenses: false, expenses: action.payload, error: undefined};
+        case FETCH_EXPENSES_FAIL:
+            return {...state, isFetchingExpenses: false, error: action.payload};
         default:
             return state;
     }

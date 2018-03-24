@@ -1,5 +1,7 @@
+import axios from 'axios';
 
-export let EXPENSES = [
+const expense_api_url = 'http://localhost:4444';
+const EXPENSES = [
     {
         "id": "1",
         "amount": 100,
@@ -22,3 +24,9 @@ export let EXPENSES = [
         "userId": "1"
     }
 ];
+
+export let fetchExpensesFromAPI = () => {
+    const url = expense_api_url + '/expenses';
+    return axios.get(url)
+        .then(d => d.data);
+};

@@ -29,12 +29,11 @@ export function fetchExpensesFailed() {
 export function fetchExpenses() {
     return (dispatch) => {
         dispatch(requestFetchExpenses());
-        fetchExpensesFromAPI()
+        return fetchExpensesFromAPI()
             .then((data) => {
                 dispatch(receiveExpensesResult(data))
             })
             .catch((err) => {
-                console.log('ERROR: ', err);
                 dispatch(fetchExpensesFailed());
             });
     }

@@ -1,32 +1,21 @@
-import moxios from 'moxios';
+import axios from "axios";
+import MockAdapter from "axios-mock-adapter";
 import {fetchExpensesFromAPI} from '../../src/resources/expenseResource'
 
-//TODO fix test for axios request
 describe('Resources', () => {
-    beforeEach(function () {
-        // import and pass your custom axios instance to this method
-        moxios.install()
-    });
-
-    afterEach(function () {
-        // import and pass your custom axios instance to this method
-        moxios.uninstall()
-    });
-
-    it("'fetchExpensesFromAPI' should return expenses JSON", () => {
+    const expense_api_url = 'http://localhost:4444';
+    it("'fetchExpensesFromAPI' should return expenses JSON", (done) => {
         //given
         const expenses = [{id: 1}];
-        moxios.stubRequest('/expenses', {
-            status: 200,
-            response: expenses
-        });
+        const mock = new MockAdapter(axios);
+        mock.onGet(expense_api_url + '/expenses').reply(200, expenses);
 
         //when
-        // console.log('>>', fetchExpensesFromAPI());
-        // fetchExpensesFromAPI().then(d=> expect(d).to.equal(2));
+        const promiseResponse = fetchExpensesFromAPI();
 
-        moxios.wait(() => console.log('yo'))
         //then
+        promiseResponse.then(response => {
+            expect(response).toEqual(expenses);
+        }).then(done);
     });
-
 });

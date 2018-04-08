@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import AddExpense from './AddExpense';
 
 export default class Dashboard extends React.Component {
     componentWillMount() {
@@ -17,6 +18,8 @@ export default class Dashboard extends React.Component {
                     Your expenses this month are:
                     {isFetchingExpenses ? <h1>Loading...</h1> : expenses.length}
                 </div>
+
+                <AddExpense />
             </div>
         );
     }

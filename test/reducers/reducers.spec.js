@@ -46,4 +46,17 @@ describe('reducers', () => {
         expect(result).toEqual({expenses: [], isFetchingExpenses: false, error: "error message"});
         expect(result).not.toBe(initialState);
     });
+
+    it('should return 200 on SUBMIT_EXPENSES_SUCCESS action', () => {
+        //given
+        const action = {type: actions.SUBMIT_EXPENSE_SUCCESS, payload: {"id": "1", "message": "Successfully saved expense."}};
+        let initialState = {isFetchingExpenses: true, error: 'error'};
+
+        //when
+        let result = reducer(initialState, action);
+
+        //then
+        expect(result).toEqual({isFetchingExpenses: false, error: 'Successfully saved expense.'});
+        expect(result).not.toBe(initialState);
+    });
 });

@@ -21,7 +21,7 @@ describe('actions', () => {
         expect(result).toEqual({payload: "Failed to fetch expenses", type: actions.FETCH_EXPENSES_FAIL});
     });
 
-    describe('Async actions', () => {
+    describe('Fetch expenses', () => {
         const middlewares = [thunk];
         const mockStore = configureStore(middlewares);
         const store = mockStore({expenses: []});
@@ -63,6 +63,43 @@ describe('actions', () => {
 
             //when
             return store.dispatch(actions.fetchExpenses()).then(() => {
+                expect(store.getActions()).toEqual(expectedActions);
+            });
+        });
+    });
+
+    describe('Submit expense', () => {
+        const middlewares = [thunk];
+        const mockStore = configureStore(middlewares);
+        const store = mockStore({expenses: []});
+        let stubbedApi;
+
+        beforeEach(() => {
+            stubbedApi = sinon.stub(api, 'submitExpenseToAPI');
+        });
+
+        afterEach(() => {
+            stubbedApi.restore();
+            store.clearActions();
+        });
+
+        it('should submit Expense', () => {
+            //given
+            const expenseToSubmit = {
+                "amount": "11.00",
+                "category": "food",
+                "userId": "sojjwal",
+                "date": "2018-01-17T20:53:14.045"
+              };
+            stubbedApi.resolves({"id": "1", "message": "Successfully saved expense."});
+
+            const expectedActions = [
+                {type: actions.FETCH_EXPENSES_INIT},
+                {type: actions.SUBMIT_EXPENSE_SUCCESS, payload: {"id": "1", "message": "Successfully saved expense."}}
+            ];
+
+            //when
+            return store.dispatch(actions.submitExpense(expenseToSubmit)).then(() => {
                 expect(store.getActions()).toEqual(expectedActions);
             });
         });

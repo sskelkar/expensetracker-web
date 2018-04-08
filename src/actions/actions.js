@@ -1,4 +1,4 @@
-import {fetchExpensesFromAPI} from '../resources/expenseResource'
+import {fetchExpensesFromAPI, submitExpenseToAPI} from '../resources/expenseResource'
 
 export const FETCH_EXPENSES_INIT = 'FETCH_EXPENSES_INIT';
 
@@ -17,6 +17,15 @@ export function receiveExpensesResult(expenses) {
     }
 }
 
+export const SUBMIT_EXPENSE_SUCCESS = 'SUBMIT_EXPENSE_SUCCESS';
+
+export function receiveSubmitResult(apiMessages) {
+    return {
+        type: SUBMIT_EXPENSE_SUCCESS,
+        payload: apiMessages
+    }
+}
+
 export const FETCH_EXPENSES_FAIL = 'FETCH_EXPENSES_FAIL';
 
 export function fetchExpensesFailed() {
@@ -32,6 +41,19 @@ export function fetchExpenses() {
         return fetchExpensesFromAPI()
             .then((data) => {
                 dispatch(receiveExpensesResult(data))
+            })
+            .catch((err) => {
+                dispatch(fetchExpensesFailed());
+            });
+    }
+}
+
+export function submitExpense(expense) {
+    return (dispatch) => {
+        dispatch(requestFetchExpenses());
+        return submitExpenseToAPI(expense)
+            .then((data) => {
+                dispatch(receiveSubmitResult(data))
             })
             .catch((err) => {
                 dispatch(fetchExpensesFailed());

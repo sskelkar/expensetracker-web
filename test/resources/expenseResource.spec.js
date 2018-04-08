@@ -1,6 +1,6 @@
 import axios from "axios";
 import MockAdapter from "axios-mock-adapter";
-import {fetchExpensesFromAPI} from '../../src/resources/expenseResource'
+import {fetchExpensesFromAPI, submitExpenseToAPI} from '../../src/resources/expenseResource'
 
 describe('Resources', () => {
     const expense_api_url = 'http://localhost:4444';
@@ -16,6 +16,26 @@ describe('Resources', () => {
         //then
         promiseResponse.then(response => {
             expect(response).toEqual(expenses);
+        }).then(done);
+    });
+
+    it("'submitExpensesToAPI' should return 200 with success message and id", (done) => {
+        //given
+        const expenseToSave = {
+            "amount": "11.00",
+            "category": "food",
+            "userId": "sojjwal",
+            "date": "2018-01-17T20:53:14.045"
+        };
+        const mock = new MockAdapter(axios);
+        mock.onPost(expense_api_url + '/expense').reply(200, {"id": "1", "message": "Successfully saved expense."});
+
+        //when
+        const promiseResponse = submitExpenseToAPI(expenseToSave);
+
+        //then
+        promiseResponse.then(response => {
+            expect(response).toEqual({"id": "1", "message": "Successfully saved expense."});
         }).then(done);
     });
 });

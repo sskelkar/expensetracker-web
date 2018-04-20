@@ -8,55 +8,55 @@ describe('reducers', () => {
         expect(reducer(initialState, {})).toBe(initialState);
     });
 
-    it('should set isFetchingExpenses flag to true on FETCH_EXPENSES_INIT action', () => {
+    it('should set showSpinner flag to true on SHOW_SPINNER action', () => {
         //given
-        const action = {type: actions.FETCH_EXPENSES_INIT};
+        const action = {type: actions.SHOW_SPINNER};
         let initialState = undefined;
 
         //when
         let result = reducer(initialState, action);
 
         //then
-        expect(result).toEqual({expenses: [], isFetchingExpenses: true, error: undefined});
+        expect(result).toEqual({expenses: [], showSpinner: true, error: undefined});
         expect(result).not.toBe(initialState);
     });
 
     it('should return expenses on FETCH_EXPENSES_SUCCESS action', () => {
         //given
         const action = {type: actions.FETCH_EXPENSES_SUCCESS, payload: EXPENSES};
-        let initialState = {isFetchingExpenses: true, error: 'error'};
+        let initialState = {showSpinner: true, error: 'error'};
 
         //when
         let result = reducer(initialState, action);
 
         //then
-        expect(result).toEqual({expenses: EXPENSES, isFetchingExpenses: false, error: undefined});
+        expect(result).toEqual({expenses: EXPENSES, showSpinner: false, error: undefined});
         expect(result).not.toBe(initialState);
     });
 
-    it('should return error message on FETCH_EXPENSES_FAIL action', () => {
+    it('should return error message on SHOW_ERROR action', () => {
         //given
-        const action = {type: actions.FETCH_EXPENSES_FAIL, payload: "error message"};
+        const action = {type: actions.SHOW_ERROR, payload: "error message"};
         let initialState = undefined;
 
         //when
         let result = reducer(initialState, action);
 
         //then
-        expect(result).toEqual({expenses: [], isFetchingExpenses: false, error: "error message"});
+        expect(result).toEqual({expenses: [], showSpinner: false, error: "error message"});
         expect(result).not.toBe(initialState);
     });
 
     it('should return 200 on SUBMIT_EXPENSES_SUCCESS action', () => {
         //given
         const action = {type: actions.SUBMIT_EXPENSE_SUCCESS, payload: {"id": "1", "message": "Successfully saved expense."}};
-        let initialState = {isFetchingExpenses: true, error: 'error'};
+        let initialState = {showSpinner: true, error: 'error'};
 
         //when
         let result = reducer(initialState, action);
 
         //then
-        expect(result).toEqual({isFetchingExpenses: false, error: 'Successfully saved expense.'});
+        expect(result).toEqual({showSpinner: false, error: 'Successfully saved expense.'});
         expect(result).not.toBe(initialState);
     });
 });

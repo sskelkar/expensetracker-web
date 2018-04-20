@@ -1,14 +1,22 @@
 import {fetchExpensesFromAPI, submitExpenseToAPI} from '../resources/expenseResource'
 
-export const FETCH_EXPENSES_INIT = 'FETCH_EXPENSES_INIT';
+export const SHOW_SPINNER = 'SHOW_SPINNER';
+export const SHOW_ERROR = 'SHOW_ERROR';
+export const FETCH_EXPENSES_SUCCESS = 'FETCH_EXPENSES_SUCCESS';
+export const SUBMIT_EXPENSE_SUCCESS = 'SUBMIT_EXPENSE_SUCCESS';
 
-export function requestFetchExpenses() {
+export function showSpinner() {
     return {
-        type: FETCH_EXPENSES_INIT
+        type: SHOW_SPINNER
     };
 }
 
-export const FETCH_EXPENSES_SUCCESS = 'FETCH_EXPENSES_SUCCESS';
+export function showError(error) {
+    return {
+        type: SHOW_ERROR,
+        payload: error
+    }
+}
 
 export function receiveExpensesResult(expenses) {
     return {
@@ -17,8 +25,6 @@ export function receiveExpensesResult(expenses) {
     }
 }
 
-export const SUBMIT_EXPENSE_SUCCESS = 'SUBMIT_EXPENSE_SUCCESS';
-
 export function receiveSubmitResult(apiMessages) {
     return {
         type: SUBMIT_EXPENSE_SUCCESS,
@@ -26,37 +32,28 @@ export function receiveSubmitResult(apiMessages) {
     }
 }
 
-export const FETCH_EXPENSES_FAIL = 'FETCH_EXPENSES_FAIL';
-
-export function fetchExpensesFailed() {
-    return {
-        type: FETCH_EXPENSES_FAIL,
-        payload: "Failed to fetch expenses"
-    }
-}
-
 export function fetchExpenses() {
     return (dispatch) => {
-        dispatch(requestFetchExpenses());
+        dispatch(showSpinner());
         return fetchExpensesFromAPI()
             .then((data) => {
                 dispatch(receiveExpensesResult(data))
             })
             .catch((err) => {
-                dispatch(fetchExpensesFailed());
+                dispatch(showError("Failed to fetch expenses"));
             });
     }
 }
 
 export function submitExpense(expense) {
     return (dispatch) => {
-        dispatch(requestFetchExpenses());
+        dispatch(showSpinner());
         return submitExpenseToAPI(expense)
             .then((data) => {
                 dispatch(receiveSubmitResult(data))
             })
             .catch((err) => {
-                dispatch(fetchExpensesFailed());
+                dispatch(showError("Failed to save expense"));
             });
     }
 }

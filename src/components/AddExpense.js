@@ -14,17 +14,18 @@ export default class AddExpense extends React.Component {
             }
         };
     }
-    submit() {
-        this.props.submitExpense(this.state.expense);
-        console.log('clikeddddd: ',this.state);
-    }
+
     render() {
         let {amount, date, category} = this.state.expense;
         return (
             <div>
                 <FormGroup>
                     <ControlLabel>Amount</ControlLabel>
-                    <FormControl id="amount" type="text" value={amount} placeholder="Enter amount"/>
+                    <FormControl id="amount"
+                                 type="text"
+                                 value={amount}
+                                 onChange={()=>{}}
+                                 placeholder="Enter amount"/>
 
                     <ControlLabel>Date</ControlLabel>
                     <FormControl id="date" type="date"/>
@@ -35,7 +36,11 @@ export default class AddExpense extends React.Component {
                         <option value="food">Food</option>
                     </FormControl>
                 </FormGroup>
-                <Button type="submit" onClick={this.submit}>Add</Button>
+
+                <Button type="submit"
+                        onClick={() => this.props.submitExpense(this.state.expense)}>
+                    Add
+                </Button>
             </div>
         );
     }

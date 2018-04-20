@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import AddExpense from './AddExpense';
+import AddExpense from '../containers/AddExpense';
 
 export default class Dashboard extends React.Component {
     componentWillMount() {
@@ -8,7 +8,7 @@ export default class Dashboard extends React.Component {
     }
 
     render() {
-        let {isFetchingExpenses, error} = this.props,
+        let {showSpinner, error} = this.props,
             expenses = this.props.expenses || [];
         return (
             <div id="outer">
@@ -16,7 +16,7 @@ export default class Dashboard extends React.Component {
                 <h1>Dashboard</h1>
                 <div id="inner">
                     Your expenses this month are:
-                    {isFetchingExpenses ? <h1>Loading...</h1> : expenses.length}
+                    {showSpinner ? <h1>Loading...</h1> : expenses.length}
                 </div>
 
                 <AddExpense />
@@ -28,6 +28,6 @@ export default class Dashboard extends React.Component {
 Dashboard.propTypes = {
     fetchExpenses: PropTypes.func,
     expenses: PropTypes.array,
-    isFetchingExpenses: PropTypes.bool,
+    showSpinner: PropTypes.bool,
     error: PropTypes.string
 };

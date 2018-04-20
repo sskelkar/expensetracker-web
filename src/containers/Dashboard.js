@@ -6,7 +6,7 @@ import Dashboard from '../components/Dashboard'
 const mapStateToProps = (state) => {
     return {
         expenses: state.expenses,
-        isFetchingExpenses: state.isFetchingExpenses,
+        showSpinner: state.showSpinner,
         error: state.error
     }
 };

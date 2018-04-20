@@ -9,12 +9,12 @@ describe('Dashboard', () => {
             expenses: [],
             fetchExpenses: () => {
             },
-            isFetchingExpenses: false
+            showSpinner: false
         };
     });
 
     it('should be correct on initial render', () => {
-        props = {...props, isFetchingExpenses: true};
+        props = {...props, showSpinner: true};
         let wrapper = shallow(<Dashboard {...props}/>);
         expect(wrapper.find('div#inner').text()).toBe('Your expenses this month are:Loading...');
     });
@@ -31,14 +31,4 @@ describe('Dashboard', () => {
 
         expect(wrapper.find('p').text()).toBe(error);
     });
-
-    // TODO: Kept this code for now to refer to stubbed actions
-    // it('should call getNextLine function when the text is clicked', () => {
-    //     let mockFunction = jest.fn();
-    //     props.getNextLine = mockFunction;
-    //     let wrapper = shallow(<Dashboard {...props}/>);
-    //     wrapper.find('#outer').simulate('click');
-    //
-    //     expect(mockFunction.mock.calls.length).toBe(1);
-    // });
 });

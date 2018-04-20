@@ -5,9 +5,9 @@ import * as actions from '../../src/actions/actions';
 import * as api from '../../src/resources/expenseResource';
 
 describe('actions', () => {
-    it('should emit fetch expenses action', () => {
-        const result = actions.requestFetchExpenses();
-        expect(result).toEqual({type: actions.FETCH_EXPENSES_INIT});
+    it('should emit SHOW_SPINNER action', () => {
+        const result = actions.showSpinner();
+        expect(result).toEqual({type: actions.SHOW_SPINNER});
     });
 
     it('should emit receive expenses result action', () => {
@@ -16,9 +16,9 @@ describe('actions', () => {
         expect(result).toEqual({payload: expenses, type: actions.FETCH_EXPENSES_SUCCESS});
     });
 
-    it('should emit receive expenses failed action', () => {
-        const result = actions.fetchExpensesFailed();
-        expect(result).toEqual({payload: "Failed to fetch expenses", type: actions.FETCH_EXPENSES_FAIL});
+    it('should emit SHOW_ERROR action with error message', () => {
+        const result = actions.showError("Failed to fetch expenses");
+        expect(result).toEqual({payload: "Failed to fetch expenses", type: actions.SHOW_ERROR});
     });
 
     describe('Fetch expenses', () => {
@@ -42,7 +42,7 @@ describe('actions', () => {
             stubbedApi.resolves(expenses);
 
             const expectedActions = [
-                {type: actions.FETCH_EXPENSES_INIT},
+                {type: actions.SHOW_SPINNER},
                 {type: actions.FETCH_EXPENSES_SUCCESS, payload: expenses}
             ];
 
@@ -52,13 +52,13 @@ describe('actions', () => {
             });
         });
 
-        it('should emit fetchExpensesFailed action when fetchExpenses fails', () => {
+        it('should emit showError action when fetchExpenses fails', () => {
             //given
             stubbedApi.rejects();
 
             const expectedActions = [
-                {type: actions.FETCH_EXPENSES_INIT},
-                {type: actions.FETCH_EXPENSES_FAIL, payload: "Failed to fetch expenses"}
+                {type: actions.SHOW_SPINNER},
+                {type: actions.SHOW_ERROR, payload: "Failed to fetch expenses"}
             ];
 
             //when
@@ -94,7 +94,7 @@ describe('actions', () => {
             stubbedApi.resolves({"id": "1", "message": "Successfully saved expense."});
 
             const expectedActions = [
-                {type: actions.FETCH_EXPENSES_INIT},
+                {type: actions.SHOW_SPINNER},
                 {type: actions.SUBMIT_EXPENSE_SUCCESS, payload: {"id": "1", "message": "Successfully saved expense."}}
             ];
 

@@ -1,44 +1,69 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {FormGroup, FormControl, ControlLabel, MenuItem, Button} from 'react-bootstrap';
+import {Button, ControlLabel, FormControl} from 'react-bootstrap';
+import moment from 'moment';
 
 export default class AddExpense extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            expense: {
-                amount: "0",
-                category: "NONE",
-                date: new Date(),
-                userId: "1"
-            }
+            amount_integer_part: 0,
+            amount_decimal_part: 0,
+            category: "NONE",
+            date: moment().format('YYYY-MM-DD'),
+            userId: "1"
         };
     }
 
+    handleIntegerChange(field, value) {
+        const numeric = /^([0-9]*)$/;
+
+        if (numeric.exec(value) != null) {
+            this.handleChange(field, Number(value));
+        }
+    }
+
+    handleChange(field, value) {
+        this.setState({[field]: value});
+    }
+
+    submit() {
+        const {category, date, userId} = this.state;
+        const amount = this.state.amount_integer_part;
+        const isoDate = moment(date).startOf('day').toISOString();
+        this.props.onSubmit({amount, category, date: isoDate, userId});
+    }
+
     render() {
-        let {amount, date, category} = this.state.expense;
+        let {amount_integer_part, date, category} = this.state;
         return (
             <div>
-                <FormGroup>
-                    <ControlLabel>Amount</ControlLabel>
-                    <FormControl id="amount"
-                                 type="text"
-                                 value={amount}
-                                 onChange={()=>{}}
-                                 placeholder="Enter amount"/>
+                <ControlLabel>Amount</ControlLabel>
+                <FormControl id="amount-integer"
+                             type="text"
+                             value={amount_integer_part}
+                             onChange={(e) => this.handleIntegerChange('amount_integer_part', e.target.value)}
+                             placeholder="Enter amount"/>
 
-                    <ControlLabel>Date</ControlLabel>
-                    <FormControl id="date" type="date"/>
+                <ControlLabel>Date</ControlLabel>
+                <FormControl id="date"
+                             type="date"
+                             value={date}
+                             onChange={(e) => this.handleChange('date', e.target.value)}/>
 
-                    <ControlLabel>Category</ControlLabel>
-                    <FormControl componentClass="select" placeholder="Category">
-                        <option value="groceries">Groceries</option>
-                        <option value="food">Food</option>
-                    </FormControl>
-                </FormGroup>
+                <ControlLabel>Category</ControlLabel>
+                <FormControl id="category"
+                             componentClass="select"
+                             value={category}
+                             placeholder="Category"
+                             onChange={(e) => this.handleChange('category', e.target.value)}>
+                    <option value="GROCERIES">Groceries</option>
+                    <option value="FOOD">Food</option>
+                    <option value="TRANSPORT">Transportation</option>
+                </FormControl>
 
                 <Button type="submit"
-                        onClick={() => this.props.submitExpense(this.state.expense)}>
+                        onClick={() => this.submit()}>
                     Add
                 </Button>
             </div>
@@ -48,6 +73,5 @@ export default class AddExpense extends React.Component {
 }
 
 AddExpense.propTypes = {
-    submitExpense: PropTypes.func,
-    message: PropTypes.string
+    onSubmit: PropTypes.func,
 };

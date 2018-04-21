@@ -8,14 +8,15 @@
   "license": "MIT",
   "scripts": {
     "build": "webpack -d",
-    "start": "webpack -d && webpack-dev-server -d",
-    "test": "jest"
+    "start": "webpack -d && webpack-dev-server -d && npm run test",
+    "test": "jest --watch"
   },
   "jest": {
     "setupTestFrameworkScriptFile": "./test/setup.js"
   },
   "dependencies": {
     "axios": "^0.18.0",
+    "moment": "^2.22.1",
     "npm": "^5.8.0",
     "react": "^16.2.0",
     "react-bootstrap": "^0.32.1",

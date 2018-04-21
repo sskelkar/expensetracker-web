@@ -11,7 +11,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        submitExpense: (expenseToSubmit) => dispatch(submitExpense(expenseToSubmit)),
+        onSubmit: (expenseToSubmit) => dispatch(submitExpense(expenseToSubmit)),
     }
 };
 

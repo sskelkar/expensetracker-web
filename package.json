@@ -7,7 +7,7 @@
   "author": "sojjwalkelkar@gmail.com",
   "license": "MIT",
   "scripts": {
-    "build": "webpack -d",
+    "build": "webpack -d && jest",
     "start": "webpack -d && webpack-dev-server -d && npm run test",
     "test": "jest --watch"
   },
